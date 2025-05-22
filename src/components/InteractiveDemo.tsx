@@ -274,7 +274,7 @@ export const InteractiveDemo = ({
           className={`${expandedMessageId ? 'w-2/5' : 'w-full'} transition-all duration-300 ease-in-out flex flex-col overflow-auto`}
         >
           <div className="flex-1 p-3 overflow-auto">
-            <div className="space-y-3 pb-4">
+            <div className="space-y-3 pb-4 max-w-[760px] mx-auto">
               {messages.map((message) => {
                 const expandableType = hasExpandableContent(message);
                 return (
@@ -305,8 +305,8 @@ export const InteractiveDemo = ({
           </div>
 
           {/* Input area - sticky to bottom */}
-          <div className={`p-3 border-t ${darkMode ? 'border-gray-800 bg-gray-800' : 'border-gray-200 bg-white'}`}>
-            <form onSubmit={handleSubmit} className="flex items-center gap-2">
+          <div className={`p-3 mb-4 border-t rounded-xl ${darkMode ? 'border-gray-800 bg-gray-800' : 'border-gray-200 bg-white'}`}>
+            <form onSubmit={handleSubmit} className="flex items-center gap-2 max-w-[760px] mx-auto">
               <input
                 ref={inputRef}
                 type="text"
@@ -322,7 +322,7 @@ export const InteractiveDemo = ({
               <button
                 type="submit"
                 disabled={!userInput.trim()}
-                className={`p-2.5 rounded-lg ${
+                className={`p-2.5 rounded-xl ${
                   userInput.trim()
                     ? darkMode 
                       ? 'bg-blue-600 hover:bg-blue-700 text-white' 
@@ -337,7 +337,7 @@ export const InteractiveDemo = ({
             </form>
             
             {/* Git Info and Agent Status */}
-            <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
+            <div className="mt-3 flex flex-wrap items-center justify-between gap-2 max-w-[760px] mx-auto">
               {/* Git Controls */}
               <GitControls 
                 gitInfo={gitInfo}
