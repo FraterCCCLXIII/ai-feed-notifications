@@ -1,8 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
-import type { Message, GitRepoInfo, AgentStatus, AlertNotification as AlertNotificationType } from './types';
+import type { Message, GitRepoInfo, AgentStatus, AlertNotification as AlertNotificationType, ToastNotification as ToastNotificationType } from './types';
 import { MessageItem } from './MessageItem';
 import { AlertNotification } from './AlertNotification';
-import { FiSend, FiMaximize2, FiMinimize2, FiCode, FiTerminal, FiGlobe, FiGitBranch, FiGitCommit, FiAlertCircle, FiCheck, FiX, FiStopCircle, FiArrowRight, FiChevronRight } from 'react-icons/fi';
+import { ToastContainer } from './ToastNotification';
+import { GitControls } from './GitControls';
+import { FiSend, FiMinimize2, FiCode, FiTerminal, FiGlobe, FiAlertCircle, FiCheck, FiX, FiStopCircle, FiChevronRight } from 'react-icons/fi';
 import { CgSpinner } from 'react-icons/cg';
 
 interface InteractiveDemoProps {
@@ -229,6 +231,12 @@ export const InteractiveDemo = ({
 
   return (
     <div className={`h-screen flex flex-col ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
+      {/* Toast Notifications */}
+      <ToastContainer 
+        notifications={toastNotifications}
+        onClose={(id) => setToastNotifications(prev => prev.filter(n => n.id !== id))}
+        darkMode={darkMode}
+      />
       {/* Header */}
       <div className={`p-3 border-b ${darkMode ? 'border-gray-800 bg-gray-800' : 'border-gray-200 bg-white'} flex justify-between items-center`}>
         <h1 className={`text-lg font-bold ${darkMode ? 'text-white' : 'text-gray-800'}`}>
@@ -285,10 +293,7 @@ export const InteractiveDemo = ({
                       >
                         {expandedMessageId === message.id 
                           ? <FiMinimize2 className={`${darkMode ? 'text-blue-400' : 'text-blue-600'}`} size={14} />
-                          : <FiChevronRight className={`${darkMode 
-                              ? `text-${message.type === 'error' ? 'red' : message.type === 'warning' ? 'yellow' : 'gray'}-400` 
-                              : `text-${message.type === 'error' ? 'red' : message.type === 'warning' ? 'yellow' : 'gray'}-600`}`} 
-                              size={14} />
+                          : <FiChevronRight className={`${darkMode ? 'text-gray-400' : 'text-gray-600'}`} size={14} />
                         }
                       </button>
                     )}
@@ -333,27 +338,15 @@ export const InteractiveDemo = ({
             
             {/* Git Info and Agent Status */}
             <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
-              {/* Git Repository Info */}
-              <div className={`flex items-center gap-2 text-xs ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                <div className={`flex items-center gap-1 px-2 py-1 rounded ${darkMode ? 'bg-gray-700' : 'bg-gray-100'}`}>
-                  <FiGitBranch className={
-                    gitInfo.status === 'clean' 
-                      ? darkMode ? 'text-green-400' : 'text-green-600'
-                      : gitInfo.status === 'modified'
-                        ? darkMode ? 'text-yellow-400' : 'text-yellow-600'
-                        : darkMode ? 'text-red-400' : 'text-red-600'
-                  } />
-                  <span className="font-medium">{gitInfo.name}</span>
-                  <span className={`px-1.5 py-0.5 rounded-full ${darkMode ? 'bg-gray-600' : 'bg-gray-200'}`}>
-                    {gitInfo.branch}
-                  </span>
-                </div>
-                
-                <div className="flex items-center gap-1">
-                  <FiGitCommit className={darkMode ? 'text-gray-500' : 'text-gray-500'} />
-                  <span className="font-mono">{gitInfo.lastCommit?.substring(0, 7)}</span>
-                </div>
-              </div>
+              {/* Git Controls */}
+              <GitControls 
+                gitInfo={gitInfo}
+                darkMode={darkMode}
+                onAction={(action) => {
+                  console.log('Git action:', action);
+                  // Handle git actions here
+                }}
+              />
               
               {/* Agent Status and Stop Button */}
               <div className="flex items-center gap-2">

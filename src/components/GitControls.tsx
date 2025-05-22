@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { GitRepoInfo, GitAction } from './types';
+import type { GitRepoInfo, GitAction } from './types';
 import { 
   FiGitCommit, 
   FiGitPullRequest, 
@@ -14,22 +14,23 @@ import {
 interface GitControlsProps {
   gitInfo: GitRepoInfo;
   darkMode?: boolean;
+  onAction?: (action: string) => void;
 }
 
-export const GitControls = ({ gitInfo, darkMode = false }: GitControlsProps) => {
+export const GitControls = ({ darkMode = false, onAction }: GitControlsProps) => {
   const [showMore, setShowMore] = useState(false);
 
   const primaryActions: GitAction[] = [
-    { label: 'Pull', icon: 'FiDownload', handler: () => console.log('Pull') },
-    { label: 'Push', icon: 'FiUpload', handler: () => console.log('Push') },
-    { label: 'Branch', icon: 'FiGitBranch', handler: () => console.log('New Branch') },
+    { label: 'Pull', icon: 'FiDownload', handler: () => onAction?.('pull') },
+    { label: 'Push', icon: 'FiUpload', handler: () => onAction?.('push') },
+    { label: 'Branch', icon: 'FiGitBranch', handler: () => onAction?.('branch') },
   ];
 
   const secondaryActions: GitAction[] = [
-    { label: 'Fetch', icon: 'FiRefreshCw', handler: () => console.log('Fetch') },
-    { label: 'New PR', icon: 'FiGitPullRequest', handler: () => console.log('New PR') },
-    { label: 'Commit', icon: 'FiGitCommit', handler: () => console.log('Commit') },
-    { label: 'Add Remote', icon: 'FiPlus', handler: () => console.log('Add Remote') },
+    { label: 'Fetch', icon: 'FiRefreshCw', handler: () => onAction?.('fetch') },
+    { label: 'New PR', icon: 'FiGitPullRequest', handler: () => onAction?.('pr') },
+    { label: 'Commit', icon: 'FiGitCommit', handler: () => onAction?.('commit') },
+    { label: 'Add Remote', icon: 'FiPlus', handler: () => onAction?.('remote') },
   ];
 
   const getIcon = (iconName: string) => {

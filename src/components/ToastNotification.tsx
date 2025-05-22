@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ToastNotification as ToastNotificationType } from './types';
+import type { ToastNotification as ToastNotificationType } from './types';
 import { FiX, FiAlertCircle, FiAlertTriangle, FiCheckCircle, FiInfo } from 'react-icons/fi';
 
 interface ToastNotificationProps {

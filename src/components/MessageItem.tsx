@@ -1,5 +1,5 @@
 import type { Message } from "./types";
-import { FiTerminal, FiAlertCircle, FiGitMerge, FiShield, FiZap, FiCode, FiBook, FiCpu, FiSend, FiCheck, FiX, FiLoader, FiInfo } from 'react-icons/fi';
+import { FiTerminal, FiAlertCircle, FiGitMerge, FiShield, FiZap, FiCode, FiBook, FiCpu, FiSend, FiCheck, FiX, FiInfo } from 'react-icons/fi';
 import { FaBug } from 'react-icons/fa';
 import { FaNodeJs } from 'react-icons/fa';
 import { CgSpinner } from 'react-icons/cg';

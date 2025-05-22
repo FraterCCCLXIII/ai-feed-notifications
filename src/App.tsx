@@ -8,13 +8,13 @@ import type { GitRepoInfo, AgentStatus } from "./components/types";
 function App() {
   const [darkMode, setDarkMode] = useState(false);
   const [activeTab, setActiveTab] = useState<"feed" | "interactive">("feed");
-  const [gitInfo, setGitInfo] = useState<GitRepoInfo>({
+  const [gitInfo] = useState<GitRepoInfo>({
     name: "ai-message-feed",
     branch: "interactive-demo",
     status: "modified",
     lastCommit: "a1b2c3d"
   });
-  const [agentStatus, setAgentStatus] = useState<AgentStatus>({
+  const [agentStatus] = useState<AgentStatus>({
     status: "online",
     message: "Ready"
   });
