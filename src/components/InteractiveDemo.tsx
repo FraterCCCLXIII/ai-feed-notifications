@@ -307,15 +307,15 @@ export const InteractiveDemo = ({
           </div>
 
           {/* Input area - sticky to bottom */}
-          <div className={`p-3 mb-4 border-t rounded-xl max-w-[760px] mx-auto ${darkMode ? 'border-gray-800 bg-gray-800' : 'border-gray-200 bg-white'}`}>
-            <form onSubmit={handleSubmit} className="flex items-center gap-2 w-full">
+          <div className={`mb-4 border-t rounded-lg max-w-[760px] w-full mx-auto ${darkMode ? 'border-gray-800 bg-gray-800' : 'border-gray-200 bg-white'}`}>
+            <form onSubmit={handleSubmit} className="flex items-center gap-2 w-full p-3 px-4">
               <input
                 ref={inputRef}
                 type="text"
                 value={userInput}
                 onChange={(e) => setUserInput(e.target.value)}
                 placeholder="Type a message... (try 'git', 'error', 'warning', or 'success')"
-                className={`flex-1 p-2.5 rounded-lg border ${
+                className={`flex-1 p-3 rounded-xl border ${
                   darkMode 
                     ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-blue-500' 
                     : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-500'
