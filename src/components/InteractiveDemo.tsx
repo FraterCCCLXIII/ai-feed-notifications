@@ -305,8 +305,8 @@ export const InteractiveDemo = ({
           </div>
 
           {/* Input area - sticky to bottom */}
-          <div className={`p-3 mb-4 border-t rounded-xl ${darkMode ? 'border-gray-800 bg-gray-800' : 'border-gray-200 bg-white'}`}>
-            <form onSubmit={handleSubmit} className="flex items-center gap-2 max-w-[760px] mx-auto">
+          <div className={`p-3 mb-4 border-t rounded-xl max-w-[760px] mx-auto ${darkMode ? 'border-gray-800 bg-gray-800' : 'border-gray-200 bg-white'}`}>
+            <form onSubmit={handleSubmit} className="flex items-center gap-2">
               <input
                 ref={inputRef}
                 type="text"
@@ -337,7 +337,7 @@ export const InteractiveDemo = ({
             </form>
             
             {/* Git Info and Agent Status */}
-            <div className="mt-3 flex flex-wrap items-center justify-between gap-2 max-w-[760px] mx-auto">
+            <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
               {/* Git Controls */}
               <GitControls 
                 gitInfo={gitInfo}
