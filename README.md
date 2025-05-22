@@ -1,6 +1,6 @@
 # AI Message Feed
 
-A React application that displays various types of AI assistant messages in a feed format, showcasing different message types, statuses, and interactive elements.
+A React application that displays various types of AI assistant messages in a feed format, showcasing different message types, statuses, and interactive elements. It also includes a taxonomy of interaction patterns and an interactive demo.
 
 ## Features
 
@@ -10,6 +10,9 @@ A React application that displays various types of AI assistant messages in a fe
 - Action buttons for user interaction
 - Dark/light mode toggle
 - Responsive design
+- Taxonomy of AI interaction patterns
+- Interactive terminal demo
+- Tab navigation between views
 
 ## Tech Stack
 
@@ -50,15 +53,47 @@ npm run preview
 ```
 src/
 ├── components/
-│   ├── MessageFeed.tsx
-│   ├── MessageItem.tsx
-│   └── types.ts
+│   ├── MessageFeed.tsx      # Main message feed component
+│   ├── MessageItem.tsx      # Individual message component
+│   ├── InteractionPatterns.tsx # Taxonomy of interaction patterns
+│   ├── InteractionDemo.tsx  # Interactive terminal demo
+│   └── types.ts             # TypeScript type definitions
 ├── data/
-│   └── messages.ts
-├── App.tsx
-├── main.tsx
-└── index.css
+│   ├── messages.ts          # Sample message data
+│   └── interaction-patterns.ts # Taxonomy data
+├── App.tsx                  # Main application component
+├── main.tsx                 # Application entry point
+└── index.css                # Global styles
 ```
+
+## Interaction Patterns
+
+The application includes a comprehensive taxonomy of AI interaction patterns, categorized by:
+
+- File Operations
+- Development Workflow
+- Package Management
+- Configuration
+- Deployment
+- Testing
+- Problem Solving
+- Troubleshooting
+- UI Testing
+
+Each pattern includes:
+- Title
+- Description
+- Example usage
+
+## Interactive Demo
+
+The application features an interactive terminal demo that simulates common development workflows:
+
+- Reading and editing files
+- Starting and stopping development servers
+- Installing dependencies
+- Building applications
+- Fixing configuration issues
 
 ## License
 
