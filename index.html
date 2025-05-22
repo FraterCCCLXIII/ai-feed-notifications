@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Assistant Message Feed</title>
+    <!-- Include Tailwind CSS directly from CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            animation: {
+              'pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            },
+            keyframes: {
+              pulse: {
+                '0%, 100%': { opacity: 1 },
+                '50%': { opacity: 0.5 },
+              },
+            },
+            boxShadow: {
+              'inner': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
+            },
+          },
+        },
+      }
+    </script>
+    <style>
+      /* Custom scrollbar - Light mode */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 4px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+      }
+
+      /* Custom scrollbar - Dark mode */
+      .dark ::-webkit-scrollbar-track {
+        background: #1f2937;
+      }
+
+      .dark ::-webkit-scrollbar-thumb {
+        background: #4b5563;
+      }
+
+      .dark ::-webkit-scrollbar-thumb:hover {
+        background: #6b7280;
+      }
+
+      /* Pre tag styling */
+      pre {
+        font-family: 'Courier New', Courier, monospace;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
+
+      /* Code highlighting */
+      code {
+        font-family: 'Courier New', Courier, monospace;
+      }
+
+      /* Animation for status badges */
+      @keyframes pulse {
+        0%, 100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.7;
+        }
+      }
+
+      .status-thinking, .status-researching {
+        animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
