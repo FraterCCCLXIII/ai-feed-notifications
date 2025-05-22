@@ -8,7 +8,8 @@ import {
   FiDownload, 
   FiMoreHorizontal,
   FiRefreshCw,
-  FiPlus
+  FiPlus,
+  FiCode
 } from 'react-icons/fi';
 
 interface GitControlsProps {
@@ -17,7 +18,7 @@ interface GitControlsProps {
   onAction?: (action: string) => void;
 }
 
-export const GitControls = ({ darkMode = false, onAction }: GitControlsProps) => {
+export const GitControls = ({ gitInfo, darkMode = false, onAction }: GitControlsProps) => {
   const [showMore, setShowMore] = useState(false);
 
   const primaryActions: GitAction[] = [
@@ -42,12 +43,34 @@ export const GitControls = ({ darkMode = false, onAction }: GitControlsProps) =>
       case 'FiDownload': return <FiDownload size={14} />;
       case 'FiRefreshCw': return <FiRefreshCw size={14} />;
       case 'FiPlus': return <FiPlus size={14} />;
+      case 'FiCode': return <FiCode size={14} />;
       default: return <FiGitBranch size={14} />;
     }
   };
 
   return (
-    <div className={`flex items-center gap-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+    <div className={`flex items-center justify-between w-full ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+      {/* Repository info */}
+      <div className={`flex items-center gap-1.5 text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+        <FiCode size={12} className={darkMode ? 'text-blue-400' : 'text-blue-600'} />
+        <span className="font-medium">{gitInfo.name}</span>
+        <span className="mx-1">•</span>
+        <FiGitBranch size={12} />
+        <span>{gitInfo.branch}</span>
+        {gitInfo.status && (
+          <span className={`ml-1 px-1.5 py-0.5 rounded-full text-xs ${
+            gitInfo.status === 'clean' 
+              ? darkMode ? 'bg-green-900/30 text-green-400' : 'bg-green-100 text-green-700'
+              : gitInfo.status === 'modified'
+                ? darkMode ? 'bg-yellow-900/30 text-yellow-400' : 'bg-yellow-100 text-yellow-700'
+                : darkMode ? 'bg-blue-900/30 text-blue-400' : 'bg-blue-100 text-blue-700'
+          }`}>
+            {gitInfo.status}
+          </span>
+        )}
+      </div>
+      
+      {/* Git actions */}
       <div className="flex items-center gap-1.5">
         {primaryActions.map((action, index) => (
           <button
