@@ -1,4 +1,35 @@
-import type { Message } from "../components/types";
+import type { Message, AlertNotification } from "../components/types";
+
+export const sampleAlerts: AlertNotification[] = [
+  {
+    id: 'git-alert',
+    type: 'info',
+    message: 'Git repository status',
+    details: 'Current branch: interactive-demo\nUncommitted changes: 5 files modified\nAhead of origin/interactive-demo by 2 commits',
+    showGitControls: true
+  },
+  {
+    id: 'error-alert',
+    type: 'error',
+    message: 'An error occurred while processing your request',
+    details: 'Error details: Connection refused. The server might be down or unreachable.',
+    showGitControls: false
+  },
+  {
+    id: 'warning-alert',
+    type: 'warning',
+    message: 'Warning: Potential security issue detected',
+    details: 'Your code contains a potential security vulnerability. Consider reviewing the highlighted sections.',
+    showGitControls: false
+  },
+  {
+    id: 'success-alert',
+    type: 'success',
+    message: 'Operation completed successfully',
+    details: 'All changes have been committed and pushed to the remote repository.',
+    showGitControls: false
+  }
+];
 
 export const sampleMessages: Message[] = [
   {

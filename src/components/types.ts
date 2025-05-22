@@ -48,6 +48,30 @@ export interface AgentStatus {
   message?: string;
 }
 
+export interface ToastNotification {
+  id: string;
+  type: 'error' | 'warning' | 'success' | 'info';
+  message: string;
+  actions?: MessageAction[];
+  autoClose?: boolean;
+  duration?: number;
+}
+
+export interface AlertNotification {
+  id: string;
+  type: 'error' | 'warning' | 'info' | 'success';
+  message: string;
+  details?: string;
+  showGitControls?: boolean;
+  actions?: MessageAction[];
+}
+
+export interface GitAction {
+  label: string;
+  icon?: string;
+  handler?: () => void;
+}
+
 export interface Message {
   id: string;
   type: MessageType;

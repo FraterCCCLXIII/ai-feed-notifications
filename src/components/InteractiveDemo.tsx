@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
-import type { Message, GitRepoInfo, AgentStatus } from './types';
+import type { Message, GitRepoInfo, AgentStatus, AlertNotification as AlertNotificationType } from './types';
 import { MessageItem } from './MessageItem';
-import { FiSend, FiMaximize2, FiMinimize2, FiCode, FiTerminal, FiGlobe, FiGitBranch, FiGitCommit, FiAlertCircle, FiCheck, FiX, FiStopCircle } from 'react-icons/fi';
+import { AlertNotification } from './AlertNotification';
+import { FiSend, FiMaximize2, FiMinimize2, FiCode, FiTerminal, FiGlobe, FiGitBranch, FiGitCommit, FiAlertCircle, FiCheck, FiX, FiStopCircle, FiArrowRight, FiChevronRight } from 'react-icons/fi';
 import { CgSpinner } from 'react-icons/cg';
 
 interface InteractiveDemoProps {
@@ -20,6 +21,26 @@ export const InteractiveDemo = ({
   const [userInput, setUserInput] = useState('');
   const [expandedMessageId, setExpandedMessageId] = useState<string | null>(null);
   const [previewType, setPreviewType] = useState<'code' | 'terminal' | 'browser'>('code');
+  const [activeAlert, setActiveAlert] = useState<AlertNotificationType | null>({
+    id: 'demo-alert',
+    type: 'warning',
+    message: 'Your repository has uncommitted changes',
+    details: 'There are 3 modified files and 1 new file that need to be committed before pushing to the remote repository.',
+    showGitControls: true
+  });
+  
+  const [toastNotifications, setToastNotifications] = useState<ToastNotificationType[]>([
+    {
+      id: 'critical-error',
+      type: 'error',
+      message: 'Failed to connect to GitHub API. Check your credentials.',
+      actions: [
+        { label: 'Retry', handler: () => console.log('Retrying connection') },
+        { label: 'Dismiss', handler: () => {} }
+      ],
+      autoClose: false
+    }
+  ]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -27,6 +48,11 @@ export const InteractiveDemo = ({
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
+
+  // Handle closing toast notifications
+  const handleCloseToast = (id: string) => {
+    setToastNotifications(prev => prev.filter(notification => notification.id !== id));
+  };
 
   // Focus input when component mounts
   useEffect(() => {
@@ -38,6 +64,45 @@ export const InteractiveDemo = ({
     if (userInput.trim()) {
       // In a real app, this would send the message to an API
       console.log('User input:', userInput);
+      
+      // Demo: Show different alerts based on input
+      if (userInput.toLowerCase().includes('error')) {
+        setActiveAlert({
+          id: 'error-alert',
+          type: 'error',
+          message: 'An error occurred while processing your request',
+          details: 'Error details: Connection refused. The server might be down or unreachable.',
+          showGitControls: false
+        });
+      } else if (userInput.toLowerCase().includes('git')) {
+        setActiveAlert({
+          id: 'git-alert',
+          type: 'info',
+          message: 'Git repository status',
+          details: 'Current branch: interactive-demo\nUncommitted changes: 5 files modified\nAhead of origin/interactive-demo by 2 commits',
+          showGitControls: true
+        });
+      } else if (userInput.toLowerCase().includes('success')) {
+        setActiveAlert({
+          id: 'success-alert',
+          type: 'success',
+          message: 'Operation completed successfully',
+          details: 'All changes have been committed and pushed to the remote repository.',
+          showGitControls: false
+        });
+      } else if (userInput.toLowerCase().includes('warning')) {
+        setActiveAlert({
+          id: 'warning-alert',
+          type: 'warning',
+          message: 'Warning: Potential security issue detected',
+          details: 'Your code contains a potential security vulnerability. Consider reviewing the highlighted sections.',
+          showGitControls: false
+        });
+      } else {
+        // Clear any existing alert for other inputs
+        setActiveAlert(null);
+      }
+      
       setUserInput('');
     }
   };
@@ -174,6 +239,25 @@ export const InteractiveDemo = ({
           {messages.length} messages
         </div>
       </div>
+      
+      {/* Alert Notification */}
+      {activeAlert && (
+        <AlertNotification
+          type={activeAlert.type}
+          message={activeAlert.message}
+          details={activeAlert.details}
+          darkMode={darkMode}
+          showGitControls={activeAlert.showGitControls}
+          onClose={() => setActiveAlert(null)}
+        />
+      )}
+      
+      {/* Toast Notifications */}
+      <ToastContainer 
+        notifications={toastNotifications} 
+        onClose={handleCloseToast}
+        darkMode={darkMode}
+      />
 
       {/* Main content area with conditional layout */}
       <div className={`flex-1 flex ${expandedMessageId ? 'overflow-hidden' : 'overflow-auto'}`}>
@@ -192,12 +276,20 @@ export const InteractiveDemo = ({
                       <button 
                         onClick={() => toggleExpand(message.id, expandableType)}
                         className={`absolute top-1/2 -right-3 transform -translate-y-1/2 p-1.5 rounded-full shadow-md 
-                          ${darkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-white hover:bg-gray-100'} 
-                          ${expandedMessageId === message.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'} 
-                          transition-opacity duration-200`}
+                          ${darkMode 
+                            ? `bg-gray-700 hover:bg-gray-600 ${expandedMessageId === message.id ? 'border border-blue-500' : ''}` 
+                            : `bg-white hover:bg-gray-100 ${expandedMessageId === message.id ? 'border border-blue-500' : ''}`
+                          } 
+                          opacity-100 transition-all duration-200`}
                         aria-label="Expand preview"
                       >
-                        <FiMaximize2 className={`${darkMode ? 'text-blue-400' : 'text-blue-600'}`} size={14} />
+                        {expandedMessageId === message.id 
+                          ? <FiMinimize2 className={`${darkMode ? 'text-blue-400' : 'text-blue-600'}`} size={14} />
+                          : <FiChevronRight className={`${darkMode 
+                              ? `text-${message.type === 'error' ? 'red' : message.type === 'warning' ? 'yellow' : 'gray'}-400` 
+                              : `text-${message.type === 'error' ? 'red' : message.type === 'warning' ? 'yellow' : 'gray'}-600`}`} 
+                              size={14} />
+                        }
                       </button>
                     )}
                   </div>
@@ -215,7 +307,7 @@ export const InteractiveDemo = ({
                 type="text"
                 value={userInput}
                 onChange={(e) => setUserInput(e.target.value)}
-                placeholder="Type a message..."
+                placeholder="Type a message... (try 'git', 'error', 'warning', or 'success')"
                 className={`flex-1 p-2.5 rounded-lg border ${
                   darkMode 
                     ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-blue-500' 
