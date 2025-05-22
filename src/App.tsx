@@ -45,7 +45,7 @@ function App() {
           <div className={`flex items-center ${darkMode ? "text-blue-400" : "text-blue-600"} mr-3`}>
             <FiCpu className="text-2xl" />
           </div>
-          <h1 className={`text-xl font-bold ${darkMode ? "text-white" : "text-gray-800"}`}>AI Assistant Dashboard</h1>
+          <h1 className={`text-xl font-bold ${darkMode ? "text-white" : "text-gray-800"}`}>All Hands Sandbox</h1>
           <div className="ml-auto flex items-center gap-4">
             <button 
               onClick={toggleDarkMode} 
@@ -125,7 +125,7 @@ function App() {
       {/* Footer - only show on feed tab */}
       {activeTab === "feed" && (
         <footer className={`mt-12 py-6 text-center text-sm ${darkMode ? "text-gray-400" : "text-gray-500"}`}>
-          <p>AI Assistant Message Feed Demo © {new Date().getFullYear()}</p>
+          <p>All Hands Sandbox © {new Date().getFullYear()}</p>
         </footer>
       )}
     </div>

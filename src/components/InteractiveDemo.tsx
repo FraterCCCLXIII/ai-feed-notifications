@@ -168,7 +168,7 @@ export const InteractiveDemo = ({
       <div className={`p-3 border-b ${darkMode ? 'border-gray-800 bg-gray-800' : 'border-gray-200 bg-white'} flex justify-between items-center`}>
         <h1 className={`text-lg font-bold ${darkMode ? 'text-white' : 'text-gray-800'}`}>
           <span className={`inline-block w-2 h-2 rounded-full mr-2 ${darkMode ? 'bg-green-400' : 'bg-green-500'} animate-pulse`}></span>
-          AI Assistant
+          All Hands Sandbox
         </h1>
         <div className={`px-2 py-1 ${darkMode ? 'bg-blue-900 text-blue-200' : 'bg-blue-100 text-blue-800'} rounded-full text-xs font-medium`}>
           {messages.length} messages

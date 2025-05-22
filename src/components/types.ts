@@ -23,6 +23,9 @@ export type MessageStatus =
   | 'error_llm_out_of_credits'
   | 'error_llm_content_policy_violation'
   | 'success'
+  | 'failure'
+  | 'warning'
+  | 'info'
   | 'failed'
   | 'completed'
   | 'in_progress';

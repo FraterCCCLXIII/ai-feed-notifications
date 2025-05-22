@@ -46,7 +46,7 @@ export const MessageFeed = ({
         <div className="flex items-center justify-between mb-4">
           <h2 className={`text-lg font-bold ${darkMode ? 'text-white' : 'text-gray-800'} flex items-center`}>
             <span className={`inline-block w-2 h-2 rounded-full mr-2 ${darkMode ? 'bg-green-400' : 'bg-green-500'} animate-pulse`}></span>
-            AI Assistant Feed
+            All Hands Sandbox
           </h2>
           <div className={`px-2.5 py-1 ${darkMode ? 'bg-blue-900 text-blue-200' : 'bg-blue-100 text-blue-800'} rounded-full text-xs font-medium shadow-sm transition-colors duration-200`}>
             {messages.length} messages

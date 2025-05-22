@@ -239,6 +239,33 @@ export const MessageItem = ({ message, darkMode = false }: MessageItemProps) => 
           
           <p className={`mt-1 text-sm ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>{message.content}</p>
           
+          {/* Progress indicators */}
+          {message.type === 'notification' && message.status === 'in_progress' && (
+            <div className="mt-2 w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+              <div 
+                className={`h-full ${darkMode ? 'bg-blue-600' : 'bg-blue-500'} rounded-full progress-bar-animated`}
+                style={{ 
+                  width: '45%',
+                  animation: 'progress-bar-stripes 1s linear infinite, pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+                }}
+              ></div>
+            </div>
+          )}
+          
+          {message.type === 'system' && message.status === 'in_progress' && (
+            <div className="mt-2 flex items-center">
+              <div className="mr-2 w-4 h-4 rounded-full border-2 border-t-transparent animate-spin"
+                style={{ 
+                  borderColor: darkMode ? 'rgba(59, 130, 246, 0.5)' : 'rgba(59, 130, 246, 0.5)',
+                  borderTopColor: 'transparent'
+                }}
+              ></div>
+              <span className={`text-xs ${darkMode ? 'text-blue-400' : 'text-blue-600'}`}>
+                Operation in progress...
+              </span>
+            </div>
+          )}
+          
           {message.code && (
             <pre className={`mt-2 p-2 ${darkMode ? 'bg-gray-950' : 'bg-gray-900'} text-gray-100 rounded-md text-xs overflow-x-auto border ${darkMode ? 'border-gray-800' : 'border-gray-700'} shadow-inner`}>
               <code>{message.code}</code>
