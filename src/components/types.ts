@@ -20,7 +20,10 @@ export type MessageStatus =
   | 'error_llm_service_unavailable'
   | 'error_llm_internal_server_error'
   | 'error_llm_out_of_credits'
-  | 'error_llm_content_policy_violation';
+  | 'error_llm_content_policy_violation'
+  | 'error_runtime_disconnected'
+  | 'error_runtime_crashed'
+  | 'error_action_not_executed';
 
 export interface MessageAction {
   command?: string;

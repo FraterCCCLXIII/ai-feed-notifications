@@ -1,10 +1,14 @@
 import { useState, useEffect } from "react";
 import { MessageFeed } from "./components/MessageFeed";
+import InteractionPatterns from "./components/InteractionPatterns";
 import { sampleMessages } from "./data/messages";
-import { FiCpu, FiMoon, FiSun } from 'react-icons/fi';
+import { FiCpu, FiMoon, FiSun, FiMessageSquare, FiList } from 'react-icons/fi';
+
+type TabType = 'messages' | 'patterns';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
+  const [activeTab, setActiveTab] = useState<TabType>('messages');
 
   useEffect(() => {
     // Check if user prefers dark mode
@@ -48,8 +52,39 @@ function App() {
         </div>
       </header>
       
+      <div className="max-w-5xl mx-auto px-4 mb-6">
+        <div className="flex border-b border-gray-200 dark:border-gray-700">
+          <button
+            className={`py-3 px-6 font-medium text-sm flex items-center gap-2 ${
+              activeTab === 'messages'
+                ? `${darkMode ? 'text-blue-400 border-b-2 border-blue-400' : 'text-blue-600 border-b-2 border-blue-600'}`
+                : `${darkMode ? 'text-gray-400 hover:text-gray-300' : 'text-gray-500 hover:text-gray-700'}`
+            }`}
+            onClick={() => setActiveTab('messages')}
+          >
+            <FiMessageSquare />
+            <span>Message Feed</span>
+          </button>
+          <button
+            className={`py-3 px-6 font-medium text-sm flex items-center gap-2 ${
+              activeTab === 'patterns'
+                ? `${darkMode ? 'text-blue-400 border-b-2 border-blue-400' : 'text-blue-600 border-b-2 border-blue-600'}`
+                : `${darkMode ? 'text-gray-400 hover:text-gray-300' : 'text-gray-500 hover:text-gray-700'}`
+            }`}
+            onClick={() => setActiveTab('patterns')}
+          >
+            <FiList />
+            <span>Interaction Patterns</span>
+          </button>
+        </div>
+      </div>
+      
       <main className="container mx-auto px-4 py-6">
-        <MessageFeed messages={sampleMessages} darkMode={darkMode} />
+        {activeTab === 'messages' ? (
+          <MessageFeed messages={sampleMessages} darkMode={darkMode} />
+        ) : (
+          <InteractionPatterns />
+        )}
       </main>
       
       <footer className={`mt-12 py-6 text-center text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>

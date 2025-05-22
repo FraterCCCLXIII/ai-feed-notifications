@@ -110,6 +110,9 @@ export const MessageItem = ({ message, darkMode = false }: MessageItemProps) => 
         case 'error_llm_internal_server_error': return 'text-red-300 bg-red-900/50 border border-red-700';
         case 'error_llm_out_of_credits': return 'text-yellow-300 bg-yellow-900/50 border border-yellow-700';
         case 'error_llm_content_policy_violation': return 'text-pink-300 bg-pink-900/50 border border-pink-700';
+        case 'error_runtime_disconnected': return 'text-red-300 bg-red-900/50 border border-red-700';
+        case 'error_runtime_crashed': return 'text-red-300 bg-red-900/50 border border-red-700';
+        case 'error_action_not_executed': return 'text-orange-300 bg-orange-900/50 border border-orange-700';
         default: return 'text-gray-300 bg-gray-800 border border-gray-700';
       }
     } else {
@@ -121,6 +124,9 @@ export const MessageItem = ({ message, darkMode = false }: MessageItemProps) => 
         case 'error_llm_internal_server_error': return 'text-red-700 bg-red-100 border border-red-200';
         case 'error_llm_out_of_credits': return 'text-yellow-700 bg-yellow-100 border border-yellow-200';
         case 'error_llm_content_policy_violation': return 'text-pink-700 bg-pink-100 border border-pink-200';
+        case 'error_runtime_disconnected': return 'text-red-700 bg-red-100 border border-red-200';
+        case 'error_runtime_crashed': return 'text-red-700 bg-red-100 border border-red-200';
+        case 'error_action_not_executed': return 'text-orange-700 bg-orange-100 border border-orange-200';
         default: return 'text-gray-700 bg-gray-100 border border-gray-200';
       }
     }
@@ -152,19 +158,19 @@ export const MessageItem = ({ message, darkMode = false }: MessageItemProps) => 
   };
 
   return (
-    <div className={`p-5 mb-4 rounded-xl border shadow-sm transition-all hover:shadow-md ${getCardStyles()}`}>
-      <div className="flex items-start gap-4">
-        <div className={`mt-1 p-2.5 rounded-full ${getIconBgColor()} shadow-sm`}>
+    <div className={`p-3 rounded-lg border shadow-sm transition-all hover:shadow-md ${getCardStyles()}`}>
+      <div className="flex items-start gap-2">
+        <div className={`mt-0.5 p-1.5 rounded-full ${getIconBgColor()} shadow-sm text-xs`}>
           {getIcon(message.type)}
         </div>
         <div className="flex-1">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <span className={`text-sm font-semibold ${darkMode ? 'text-white' : 'text-gray-800'}`}>
+            <div className="flex items-center gap-1.5">
+              <span className={`text-xs font-semibold ${darkMode ? 'text-white' : 'text-gray-800'}`}>
                 {message.type.charAt(0).toUpperCase() + message.type.slice(1)}
               </span>
               {message.status && (
-                <span className={`text-xs px-2.5 py-1 rounded-full font-medium shadow-sm ${getStatusBadgeStyles()}`}>
+                <span className={`text-xs px-1.5 py-0.5 rounded-full font-medium ${getStatusBadgeStyles()}`}>
                   {message.status.replace(/_/g, ' ')}
                 </span>
               )}
@@ -174,21 +180,21 @@ export const MessageItem = ({ message, darkMode = false }: MessageItemProps) => 
             </span>
           </div>
           
-          <p className={`mt-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>{message.content}</p>
+          <p className={`mt-1 text-sm ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>{message.content}</p>
           
           {message.code && (
-            <pre className={`mt-3 p-4 ${darkMode ? 'bg-gray-950' : 'bg-gray-900'} text-gray-100 rounded-lg text-sm overflow-x-auto border ${darkMode ? 'border-gray-800' : 'border-gray-700'} shadow-inner`}>
+            <pre className={`mt-2 p-2 ${darkMode ? 'bg-gray-950' : 'bg-gray-900'} text-gray-100 rounded-md text-xs overflow-x-auto border ${darkMode ? 'border-gray-800' : 'border-gray-700'} shadow-inner`}>
               <code>{message.code}</code>
             </pre>
           )}
           
           {message.actions && message.actions.length > 0 && (
-            <div className="mt-4 flex flex-wrap gap-2">
+            <div className="mt-2 flex flex-wrap gap-1.5">
               {message.actions.map((action, index) => (
                 <button
                   key={index}
                   onClick={action.handler}
-                  className={`px-4 py-2 text-sm rounded-md transition-all shadow-sm hover:shadow ${
+                  className={`px-2 py-1 text-xs rounded transition-all ${
                     index === 0 
                       ? getPrimaryButtonStyles()
                       : darkMode 
@@ -198,8 +204,8 @@ export const MessageItem = ({ message, darkMode = false }: MessageItemProps) => 
                 >
                   {action.label}
                   {action.command && (
-                    <span className="ml-2 opacity-80" title={action.command}>
-                      <FiTerminal className="inline-block" />
+                    <span className="ml-1 opacity-80" title={action.command}>
+                      <FiTerminal className="inline-block text-xs" />
                     </span>
                   )}
                 </button>
