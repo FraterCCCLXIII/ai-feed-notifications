@@ -49,7 +49,7 @@ export const GitControls = ({ gitInfo, darkMode = false, onAction }: GitControls
   };
 
   return (
-    <div className={`flex items-center justify-between w-full px-1 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+    <div className={`flex items-center justify-between w-full px-4 py-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
       {/* Repository info */}
       <div className={`flex items-center gap-1.5 text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
         <FiCode size={12} className={darkMode ? 'text-blue-400' : 'text-blue-600'} />

@@ -267,7 +267,7 @@ export const InteractiveDemo = ({
           className={`${expandedMessageId ? 'w-2/5' : 'w-full'} transition-all duration-300 ease-in-out flex flex-col overflow-auto`}
         >
           <div className="flex-1 p-3 overflow-auto">
-            <div className="space-y-3 pb-4 max-w-[760px] mx-auto">
+            <div className="space-y-3 pb-4 max-w-[780px] mx-auto">
               {messages.map((message) => {
                 const expandableType = hasExpandableContent(message);
                 return (
@@ -298,7 +298,7 @@ export const InteractiveDemo = ({
           </div>
 
           {/* Toast Notifications */}
-          <div className="max-w-[760px] mx-auto px-3">
+          <div className="max-w-[780px] mx-auto px-3">
             <ToastContainer 
               notifications={toastNotifications} 
               onClose={handleCloseToast}
@@ -307,8 +307,8 @@ export const InteractiveDemo = ({
           </div>
 
           {/* Input area - sticky to bottom */}
-          <div className={`mb-4 border-t rounded-lg max-w-[760px] w-full mx-auto ${darkMode ? 'border-gray-800 bg-gray-800' : 'border-gray-200 bg-white'}`}>
-            <form onSubmit={handleSubmit} className="flex items-center gap-2 w-full p-3 px-4">
+          <div className={`mb-4 border-t rounded-lg max-w-[780px] w-full mx-auto ${darkMode ? 'border-gray-800 bg-gray-800' : 'border-gray-200 bg-white'}`}>
+            <form onSubmit={handleSubmit} className="flex items-center gap-2 w-full p-4 px-5">
               <input
                 ref={inputRef}
                 type="text"
