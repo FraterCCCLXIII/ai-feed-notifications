@@ -260,13 +260,6 @@ export const InteractiveDemo = ({
         />
       )}
       
-      {/* Toast Notifications */}
-      <ToastContainer 
-        notifications={toastNotifications} 
-        onClose={handleCloseToast}
-        darkMode={darkMode}
-      />
-
       {/* Main content area with conditional layout */}
       <div className={`flex-1 flex ${expandedMessageId ? 'overflow-hidden' : 'overflow-auto'}`}>
         {/* Messages container - shrinks when preview is open */}
@@ -304,9 +297,18 @@ export const InteractiveDemo = ({
             </div>
           </div>
 
+          {/* Toast Notifications */}
+          <div className="max-w-[760px] mx-auto px-3">
+            <ToastContainer 
+              notifications={toastNotifications} 
+              onClose={handleCloseToast}
+              darkMode={darkMode}
+            />
+          </div>
+
           {/* Input area - sticky to bottom */}
-          <div className={`mb-4 border-t rounded-lg max-w-[760px] mx-auto ${darkMode ? 'border-gray-800 bg-gray-800' : 'border-gray-200 bg-white'}`}>
-            <form onSubmit={handleSubmit} className="flex items-center gap-2 w-full p-3">
+          <div className={`p-3 mb-4 border-t rounded-xl max-w-[760px] mx-auto ${darkMode ? 'border-gray-800 bg-gray-800' : 'border-gray-200 bg-white'}`}>
+            <form onSubmit={handleSubmit} className="flex items-center gap-2 w-full">
               <input
                 ref={inputRef}
                 type="text"

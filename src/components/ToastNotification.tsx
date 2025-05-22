@@ -63,11 +63,9 @@ export const ToastNotification = ({
 
   return (
     <div 
-      className={`fixed bottom-20 left-1/2 transform -translate-x-1/2 z-50 
-        ${getBackgroundColor()} text-white rounded-lg shadow-lg 
-        transition-all duration-300 ease-in-out
+      className={`${getBackgroundColor()} text-white rounded-lg shadow-lg 
+        transition-all duration-300 ease-in-out mb-3
         ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-      style={{ maxWidth: '90%', width: '500px' }}
     >
       <div className="flex items-center p-4">
         <div className="flex-shrink-0 mr-3">
