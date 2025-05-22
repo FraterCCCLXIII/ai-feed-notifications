@@ -11,7 +11,8 @@ export type MessageType =
   | 'performance'
   | 'api'
   | 'prompt'
-  | 'error';
+  | 'error'
+  | 'notification';
 
 export type MessageStatus = 
   | 'thinking'
@@ -20,12 +21,28 @@ export type MessageStatus =
   | 'error_llm_service_unavailable'
   | 'error_llm_internal_server_error'
   | 'error_llm_out_of_credits'
-  | 'error_llm_content_policy_violation';
+  | 'error_llm_content_policy_violation'
+  | 'success'
+  | 'failed'
+  | 'completed'
+  | 'in_progress';
 
 export interface MessageAction {
   command?: string;
   label: string;
   handler?: () => void;
+}
+
+export interface GitRepoInfo {
+  name: string;
+  branch: string;
+  status?: 'clean' | 'modified' | 'untracked';
+  lastCommit?: string;
+}
+
+export interface AgentStatus {
+  status: 'online' | 'offline' | 'busy' | 'error';
+  message?: string;
 }
 
 export interface Message {

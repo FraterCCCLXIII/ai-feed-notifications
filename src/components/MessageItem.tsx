@@ -1,7 +1,8 @@
 import type { Message } from "./types";
-import { FiTerminal, FiAlertCircle, FiGitMerge, FiShield, FiZap, FiCode, FiBook, FiCpu, FiSend } from 'react-icons/fi';
+import { FiTerminal, FiAlertCircle, FiGitMerge, FiShield, FiZap, FiCode, FiBook, FiCpu, FiSend, FiCheck, FiX, FiLoader, FiInfo } from 'react-icons/fi';
 import { FaBug } from 'react-icons/fa';
 import { FaNodeJs } from 'react-icons/fa';
+import { CgSpinner } from 'react-icons/cg';
 
 interface MessageItemProps {
   message: Message;
@@ -14,7 +15,21 @@ export const MessageItem = ({ message, darkMode = false }: MessageItemProps) => 
   };
 
   // Get icon based on message type
-  const getIcon = (type: string) => {
+  const getIcon = (type: string, status?: string) => {
+    // For notification type, use status to determine icon
+    if (type === 'notification' && status) {
+      switch (status) {
+        case 'success': return <FiCheck className={`${darkMode ? 'text-green-400' : 'text-green-600'}`} />;
+        case 'failure': return <FiX className={`${darkMode ? 'text-red-400' : 'text-red-600'}`} />;
+        case 'warning': return <FiAlertCircle className={`${darkMode ? 'text-yellow-400' : 'text-yellow-600'}`} />;
+        case 'info': return <FiInfo className={`${darkMode ? 'text-blue-400' : 'text-blue-600'}`} />;
+        case 'in_progress': return <CgSpinner className={`${darkMode ? 'text-blue-400' : 'text-blue-600'} animate-spin`} />;
+        case 'completed': return <FiCheck className={`${darkMode ? 'text-green-400' : 'text-green-600'}`} />;
+        default: return <FiSend className={`${darkMode ? 'text-gray-400' : 'text-gray-600'}`} />;
+      }
+    }
+    
+    // For other types
     switch (type) {
       case 'system': return <FiCpu className={`${darkMode ? 'text-blue-400' : 'text-blue-500'}`} />;
       case 'code': return <FiCode className={`${darkMode ? 'text-purple-400' : 'text-purple-500'}`} />;
@@ -29,12 +44,37 @@ export const MessageItem = ({ message, darkMode = false }: MessageItemProps) => 
       case 'api': return <FiSend className={`${darkMode ? 'text-blue-300' : 'text-blue-400'}`} />;
       case 'prompt': return <FiSend className={`${darkMode ? 'text-gray-300' : 'text-gray-400'}`} />;
       case 'error': return <FiAlertCircle className={`${darkMode ? 'text-red-400' : 'text-red-600'}`} />;
+      case 'notification': return <FiSend className={`${darkMode ? 'text-gray-300' : 'text-gray-400'}`} />;
       default: return <FiCpu className={`${darkMode ? 'text-gray-400' : 'text-gray-500'}`} />;
     }
   };
 
   // Define background and border colors based on message type
   const getCardStyles = () => {
+    // For notification type, use status to determine styling
+    if (message.type === 'notification' && message.status) {
+      if (darkMode) {
+        switch (message.status) {
+          case 'success': return 'border-green-800 bg-green-900/30';
+          case 'failure': return 'border-red-800 bg-red-900/30';
+          case 'warning': return 'border-yellow-800 bg-yellow-900/30';
+          case 'in_progress': return 'border-blue-800 bg-blue-900/30';
+          case 'completed': return 'border-green-800 bg-green-900/30';
+          default: return 'border-gray-700 bg-gray-800/50';
+        }
+      } else {
+        switch (message.status) {
+          case 'success': return 'border-green-300 bg-gradient-to-br from-green-50 to-green-100';
+          case 'failure': return 'border-red-300 bg-gradient-to-br from-red-50 to-red-100';
+          case 'warning': return 'border-yellow-300 bg-gradient-to-br from-yellow-50 to-yellow-100';
+          case 'in_progress': return 'border-blue-300 bg-gradient-to-br from-blue-50 to-blue-100';
+          case 'completed': return 'border-green-300 bg-gradient-to-br from-green-50 to-green-100';
+          default: return 'border-gray-300 bg-gradient-to-br from-white to-gray-50';
+        }
+      }
+    }
+    
+    // For other types
     if (darkMode) {
       switch (message.type) {
         case 'error': return 'border-red-800 bg-red-900/30';
@@ -110,6 +150,13 @@ export const MessageItem = ({ message, darkMode = false }: MessageItemProps) => 
         case 'error_llm_internal_server_error': return 'text-red-300 bg-red-900/50 border border-red-700';
         case 'error_llm_out_of_credits': return 'text-yellow-300 bg-yellow-900/50 border border-yellow-700';
         case 'error_llm_content_policy_violation': return 'text-pink-300 bg-pink-900/50 border border-pink-700';
+        case 'success': return 'text-green-300 bg-green-900/50 border border-green-700';
+        case 'failure': return 'text-red-300 bg-red-900/50 border border-red-700';
+        case 'warning': return 'text-yellow-300 bg-yellow-900/50 border border-yellow-700';
+        case 'info': return 'text-blue-300 bg-blue-900/50 border border-blue-700';
+        case 'failed': return 'text-red-300 bg-red-900/50 border border-red-700';
+        case 'completed': return 'text-green-300 bg-green-900/50 border border-green-700';
+        case 'in_progress': return 'text-blue-300 bg-blue-900/50 border border-blue-700';
         default: return 'text-gray-300 bg-gray-800 border border-gray-700';
       }
     } else {
@@ -121,6 +168,13 @@ export const MessageItem = ({ message, darkMode = false }: MessageItemProps) => 
         case 'error_llm_internal_server_error': return 'text-red-700 bg-red-100 border border-red-200';
         case 'error_llm_out_of_credits': return 'text-yellow-700 bg-yellow-100 border border-yellow-200';
         case 'error_llm_content_policy_violation': return 'text-pink-700 bg-pink-100 border border-pink-200';
+        case 'success': return 'text-green-700 bg-green-100 border border-green-200';
+        case 'failure': return 'text-red-700 bg-red-100 border border-red-200';
+        case 'warning': return 'text-yellow-700 bg-yellow-100 border border-yellow-200';
+        case 'info': return 'text-blue-700 bg-blue-100 border border-blue-200';
+        case 'failed': return 'text-red-700 bg-red-100 border border-red-200';
+        case 'completed': return 'text-green-700 bg-green-100 border border-green-200';
+        case 'in_progress': return 'text-blue-700 bg-blue-100 border border-blue-200';
         default: return 'text-gray-700 bg-gray-100 border border-gray-200';
       }
     }
@@ -152,19 +206,28 @@ export const MessageItem = ({ message, darkMode = false }: MessageItemProps) => 
   };
 
   return (
-    <div className={`p-5 mb-4 rounded-xl border shadow-sm transition-all hover:shadow-md ${getCardStyles()}`}>
-      <div className="flex items-start gap-4">
-        <div className={`mt-1 p-2.5 rounded-full ${getIconBgColor()} shadow-sm`}>
-          {getIcon(message.type)}
+    <div className={`p-3 rounded-lg border shadow-sm transition-all hover:shadow-md ${getCardStyles()}`}>
+      <div className="flex items-start gap-2">
+        <div className={`mt-0.5 p-1.5 rounded-full ${getIconBgColor()} shadow-sm`}>
+          <div className="text-sm">{getIcon(message.type, message.status)}</div>
         </div>
         <div className="flex-1">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <span className={`text-sm font-semibold ${darkMode ? 'text-white' : 'text-gray-800'}`}>
+            <div className="flex items-center gap-1.5">
+              <span className={`text-xs font-semibold ${darkMode ? 'text-white' : 'text-gray-800'}`}>
                 {message.type.charAt(0).toUpperCase() + message.type.slice(1)}
               </span>
               {message.status && (
-                <span className={`text-xs px-2.5 py-1 rounded-full font-medium shadow-sm ${getStatusBadgeStyles()}`}>
+                <span className={`text-xs px-1.5 py-0.5 rounded-full font-medium shadow-sm flex items-center gap-1 ${getStatusBadgeStyles()}`}>
+                  {message.status === 'success' && <FiCheck className="inline-block" size={12} />}
+                  {message.status === 'failure' && <FiX className="inline-block" size={12} />}
+                  {message.status === 'warning' && <FiAlertCircle className="inline-block" size={12} />}
+                  {message.status === 'info' && <FiInfo className="inline-block" size={12} />}
+                  {message.status === 'failed' && <FiX className="inline-block" size={12} />}
+                  {message.status === 'completed' && <FiCheck className="inline-block" size={12} />}
+                  {message.status === 'in_progress' && <CgSpinner className="inline-block animate-spin" size={12} />}
+                  {message.status === 'thinking' && <CgSpinner className="inline-block animate-spin" size={12} />}
+                  {message.status === 'researching' && <CgSpinner className="inline-block animate-spin" size={12} />}
                   {message.status.replace(/_/g, ' ')}
                 </span>
               )}
@@ -174,21 +237,21 @@ export const MessageItem = ({ message, darkMode = false }: MessageItemProps) => 
             </span>
           </div>
           
-          <p className={`mt-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>{message.content}</p>
+          <p className={`mt-1 text-sm ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>{message.content}</p>
           
           {message.code && (
-            <pre className={`mt-3 p-4 ${darkMode ? 'bg-gray-950' : 'bg-gray-900'} text-gray-100 rounded-lg text-sm overflow-x-auto border ${darkMode ? 'border-gray-800' : 'border-gray-700'} shadow-inner`}>
+            <pre className={`mt-2 p-2 ${darkMode ? 'bg-gray-950' : 'bg-gray-900'} text-gray-100 rounded-md text-xs overflow-x-auto border ${darkMode ? 'border-gray-800' : 'border-gray-700'} shadow-inner`}>
               <code>{message.code}</code>
             </pre>
           )}
           
           {message.actions && message.actions.length > 0 && (
-            <div className="mt-4 flex flex-wrap gap-2">
+            <div className="mt-2 flex flex-wrap gap-1.5">
               {message.actions.map((action, index) => (
                 <button
                   key={index}
                   onClick={action.handler}
-                  className={`px-4 py-2 text-sm rounded-md transition-all shadow-sm hover:shadow ${
+                  className={`px-2.5 py-1 text-xs rounded-md transition-all shadow-sm hover:shadow ${
                     index === 0 
                       ? getPrimaryButtonStyles()
                       : darkMode 
@@ -198,8 +261,8 @@ export const MessageItem = ({ message, darkMode = false }: MessageItemProps) => 
                 >
                   {action.label}
                   {action.command && (
-                    <span className="ml-2 opacity-80" title={action.command}>
-                      <FiTerminal className="inline-block" />
+                    <span className="ml-1 opacity-80" title={action.command}>
+                      <FiTerminal className="inline-block text-xs" />
                     </span>
                   )}
                 </button>
