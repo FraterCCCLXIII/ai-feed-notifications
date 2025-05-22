@@ -305,8 +305,8 @@ export const InteractiveDemo = ({
           </div>
 
           {/* Input area - sticky to bottom */}
-          <div className={`p-3 mb-4 border-t rounded-xl max-w-[760px] mx-auto ${darkMode ? 'border-gray-800 bg-gray-800' : 'border-gray-200 bg-white'}`}>
-            <form onSubmit={handleSubmit} className="flex items-center gap-2">
+          <div className={`mb-4 border-t rounded-lg max-w-[760px] mx-auto ${darkMode ? 'border-gray-800 bg-gray-800' : 'border-gray-200 bg-white'}`}>
+            <form onSubmit={handleSubmit} className="flex items-center gap-2 w-full p-3">
               <input
                 ref={inputRef}
                 type="text"
