@@ -110,6 +110,9 @@ export const MessageItem = ({ message, darkMode = false }: MessageItemProps) => 
         case 'error_llm_internal_server_error': return 'text-red-300 bg-red-900/50 border border-red-700';
         case 'error_llm_out_of_credits': return 'text-yellow-300 bg-yellow-900/50 border border-yellow-700';
         case 'error_llm_content_policy_violation': return 'text-pink-300 bg-pink-900/50 border border-pink-700';
+        case 'error_runtime_disconnected': return 'text-red-300 bg-red-900/50 border border-red-700';
+        case 'error_runtime_crashed': return 'text-red-300 bg-red-900/50 border border-red-700';
+        case 'error_action_not_executed': return 'text-orange-300 bg-orange-900/50 border border-orange-700';
         default: return 'text-gray-300 bg-gray-800 border border-gray-700';
       }
     } else {
@@ -121,6 +124,9 @@ export const MessageItem = ({ message, darkMode = false }: MessageItemProps) => 
         case 'error_llm_internal_server_error': return 'text-red-700 bg-red-100 border border-red-200';
         case 'error_llm_out_of_credits': return 'text-yellow-700 bg-yellow-100 border border-yellow-200';
         case 'error_llm_content_policy_violation': return 'text-pink-700 bg-pink-100 border border-pink-200';
+        case 'error_runtime_disconnected': return 'text-red-700 bg-red-100 border border-red-200';
+        case 'error_runtime_crashed': return 'text-red-700 bg-red-100 border border-red-200';
+        case 'error_action_not_executed': return 'text-orange-700 bg-orange-100 border border-orange-200';
         default: return 'text-gray-700 bg-gray-100 border border-gray-200';
       }
     }
